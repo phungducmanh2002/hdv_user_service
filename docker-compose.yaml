@@ -1,0 +1,47 @@
+version: "3.8"
+
+services:
+  db_service:
+    image: mysql:latest
+    restart: always
+    networks:
+      - user_network
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: true
+      MYSQL_RANDOM_ROOT_PASSWORD: false
+      MYSQL_USER: sa
+      MYSQL_PASSWORD: 1
+      MYSQL_DATABASE: hdv_user_service
+    ports:
+      - "3306:3306"
+    volumes:
+      - user-mysql-data:/var/lib/mysql
+
+  user_service:
+    build:
+      context: ./user_service
+      dockerfile: Dockerfile
+    depends_on:
+      - db_service
+    ports:
+      - "3000:3000"
+    networks:
+      - user_network
+    environment:
+      HOST_IP: 192.168.1.23
+      SERVICE_IP: user_service
+      SERVICE_PORT: 3000
+      DB_HOST: db_service
+      DB_PORT: 3306
+      DB_USERNAME: sa
+      DB_PASSWORD: 1
+      DB_DBNAME: hdv_user_service
+      DB_DIALECT: mysql
+      GENERATE_DB: 0,
+      REGISTRY_REGISTER: 0
+
+networks:
+  user_network:
+    driver: bridge
+volumes:
+  user-mysql-data:

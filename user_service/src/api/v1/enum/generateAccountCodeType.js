@@ -1,0 +1,4 @@
+module.exports = {
+  GENERATE_ACTIVE_ACCOUNT_CODE: 1,
+  GENERATE_RESET_PASSWORD_CODE: 2,
+};
