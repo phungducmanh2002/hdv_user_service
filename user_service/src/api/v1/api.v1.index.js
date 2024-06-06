@@ -2,12 +2,17 @@ const express = require("express");
 const IndexRouter = require("./main/router/index.routes");
 const EntityIndex = require("./main/data/model/entity/index.entity");
 const ProjectHelper = require("./helper/project.helper");
+const RequestMiddleWare = require("./main/middleware/req.middleware");
 const app = express();
 
-app.use((req, res, next) => {
-  req.reqData = {};
-  next();
-}, IndexRouter.router);
+app.use(
+  RequestMiddleWare.Cors,
+  (req, res, next) => {
+    req.reqData = {};
+    next();
+  },
+  IndexRouter.router
+);
 
 EntityIndex.DoAction();
 
