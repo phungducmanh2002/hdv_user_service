@@ -18,7 +18,14 @@ class AccountController {
     },
     /**STEP2: CREATE ACCOUNT */
     (req, res, next) => {
-      AccountService.CreateAccount(req.reqData.email, req.reqData.password, req.reqData.firstName, req.reqData.lastName, req.reqData.gender ? req.reqData.gender : 0, req.reqData.birthDay)
+      AccountService.CreateAccount(
+        req.reqData.email,
+        req.reqData.password,
+        req.reqData.firstName,
+        req.reqData.lastName,
+        req.reqData.gender ? req.reqData.gender : 0,
+        req.reqData.birthDay
+      )
         .then((account) => {
           res.json(DataResponse.Created(account, "create account success"));
         })
@@ -29,7 +36,13 @@ class AccountController {
   ];
   static Update = [
     (req, res, next) => {
-      AccountService.UpdateAccount(req.reqData.idAccount, req.reqData.firstName, req.reqData.lastName, req.reqData.gender, req.reqData.birthDay)
+      AccountService.UpdateAccount(
+        req.reqData.idAccount,
+        req.reqData.firstName,
+        req.reqData.lastName,
+        req.reqData.gender,
+        req.reqData.birthDay
+      )
         .then((account) => {
           res.json(DataResponse.Oke(account, "update account success"));
         })
@@ -40,7 +53,7 @@ class AccountController {
   ];
   static Get = [
     (req, res, next) => {
-      const id = req.reqData.id;
+      const id = req.reqData?.id;
       const pageNum = req.query?.pageNum;
 
       // get all
@@ -76,7 +89,9 @@ class AccountController {
       AccountService.GetByEmail(email)
         .then((account) => {
           if (!account) {
-            res.json(DataResponse.Notfound(`not found account by email: ${email}`));
+            res.json(
+              DataResponse.Notfound(`not found account by email: ${email}`)
+            );
             return;
           }
           res.json(DataResponse.Oke(account));

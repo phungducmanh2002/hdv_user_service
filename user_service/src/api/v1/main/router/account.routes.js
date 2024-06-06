@@ -6,8 +6,16 @@ const router = require("express").Router();
 
 router.get("/:id", RequestMiddleWare.CheckID, AccountController.Get);
 router.get("/email/:email", AccountController.GetByEmail);
-router.get("/:id/users", RequestMiddleWare.CheckID, AccountController.GetAllUsers);
-router.post("/send-code", RequestMiddleWare.ParseReqBody, AccountController.SendCode);
+router.get(
+  "/:id/users",
+  RequestMiddleWare.CheckID,
+  AccountController.GetAllUsers
+);
+router.post(
+  "/send-code",
+  RequestMiddleWare.ParseReqBody,
+  AccountController.SendCode
+);
 router.put("/active", AccountController.Active);
 router.delete("/:id", RequestMiddleWare.CheckID, AccountController.Delete);
 
