@@ -18,21 +18,21 @@ class EntityIndex {
   static async DoAction() {
     if (ProjectHelper.getEnviromentValue("GENERATE_DB") == 1) {
       await SequelizeConfig.sequelize.sync({ force: true });
-    }
-    if (ProjectHelper.getEnviromentValue("GENERATE_DATA") == 1) {
-      try {
-        await RoleEntity.bulkCreate([
-          {
-            roleName: "ADMIN",
-          },
-          {
-            roleName: "HOTELIER",
-          },
-          {
-            roleName: "CUSTOMER",
-          },
-        ]);
-      } catch (error) {}
+      if (ProjectHelper.getEnviromentValue("GENERATE_DATA") == 1) {
+        try {
+          await RoleEntity.bulkCreate([
+            {
+              roleName: "ADMIN",
+            },
+            {
+              roleName: "HOTELIER",
+            },
+            {
+              roleName: "CUSTOMER",
+            },
+          ]);
+        } catch (error) {}
+      }
     }
   }
 }
